@@ -1,0 +1,11 @@
+{
+  "name": "api-project",
+  "version": "0.0.0",
+  "description": "API project implementing various microservices",
+  "main": "server.js",
+  "repository": "",
+  "author": "ryanjc",
+  "dependencies": {
+    "express": "~3.2.4"
+  }
+}

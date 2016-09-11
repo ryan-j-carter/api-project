@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>API Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="header">
+      <h1 id="title">API Microservices</h1>
+    </div>
+    <div id="nav">
+      <ul id="nav-list">
+        <li><a href="#timestamp">Timestamp</a></li>
+        <li><a href="#whoami">Who Am I?</a></li>
+      </ul>
+    </div>
+    
+    <div id="container">
+      <section id="timestamp">
+        <h2 class="api-name">Timestamp</h2>
+        <blockquote class="api-desc">
+          Take a string as a parameter that should be a unix timestamp or natural date (ex. January 1, 2016). Returns an object holding both date formats, which will be null if an invalid date was given.
+        </blockquote>
+        
+        <h3 class="example-type">Example usage:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/ts/December%2015,%202015</code><br/>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/ts/1450137600</code>
+        
+        <h3 class="example-type">Example output:</h3>
+        <code class="example-code">{ "unix": 1450137600, "natural": "December 15, 2015" }</code>
+      </section>
+      
+      <section id="whoami">
+        <h2 class="api-name">Who Am I?</h2>
+        <blockquote class="api-desc">
+          Display the IP address, language, and device details for the machine that makes a request.
+        </blockquote>
+        
+        <h3 class="example-type">Example usage:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/whoami</code>
+        
+        <h3 class="example-type">Example output:</h3>
+        <code class="example-code">{"ipaddress":"68.111.152.79","language":"en-US","software":"Windows NT 10.0; WOW64"}</code>
+      </section>
+  </body>
+</html>
