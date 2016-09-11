@@ -5,6 +5,7 @@
 //
 var express = require('express');
 var path = require('path');
+var crypto = require('crypto');
 
 var api = express();
 
@@ -57,6 +58,37 @@ api.get("/api/whoami", function(req, res) {
     res.send(JSON.stringify(headers));
 });
 
+//Take a URL as a parameter and give it a 'shortened' redirect code
+//Return an object with the shortened url and where it will redirect
+
+var redirects = {};
+api.get("/api/shorten/*", function(req, res) {
+  res.setHeader('content-type', 'text/plaintext');
+  
+  var h = crypto.createHash('md5')
+          .update(req.params[0])
+          .digest('hex')
+          .substr(0, 4);
+  
+  if (redirects[h] == undefined) redirects[h] = req.params[0];
+  
+  res.send(JSON.stringify({
+    original_url: req.params[0],
+    short_url: "http://" + req.headers.host.split(':')[0] + "/" + h
+  }));
+});
+
+api.get("/:id", function(req, res) {
+  if (redirects[req.params.id] == undefined) {
+   res.setHeader('content-type', 'text/plaintext');
+   res.send('URL Shortcut Not Found');
+  }
+  else {
+    res.redirect(redirects[req.params.id]);
+  }
+});
+
+//Listen on the provided IP:port or the default 0.0.0.0:8080
 var port = process.env.PORT || 8080;
 var addr = process.env.IP || "0.0.0.0";
 api.listen(port, addr, function(){

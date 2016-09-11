@@ -15,6 +15,7 @@
       <ul id="nav-list">
         <li><a href="#timestamp">Timestamp</a></li>
         <li><a href="#whoami">Who Am I?</a></li>
+        <li><a href="#urlshortener">URL Shortener</a></li>
       </ul>
     </div>
     
@@ -44,6 +45,25 @@
         
         <h3 class="example-type">Example output:</h3>
         <code class="example-code">{"ipaddress":"68.111.152.79","language":"en-US","software":"Windows NT 10.0; WOW64"}</code>
+      </section>
+      
+      <section id="urlshortener">
+        <h2 class="api-name">URL Shortener</h2>
+        <blockquote class="api-desc">
+          Takes a URL as a parameter and hashes it to get a unique code. Use this code to redirect to the given URL.
+        </blockquote>
+        
+        <h3 class="example-type">Example creation:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/shorten/https://google.com</code>
+        
+        <h3 class="example-type">Example creation output:</h3>
+        <code class="example-code">{"original_url":"https://google.com","short_url":"http://ryanjc-api-project.herokuapp.com/9999"}</code>
+
+        <h3 class="example-type">Example usage:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/9999</code>
+        
+        <h3 class="example-type">Redirects to:</h3>
+        <code class="example-code">https://google.com</code>
       </section>
   </body>
 </html>
