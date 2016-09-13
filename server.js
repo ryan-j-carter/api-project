@@ -6,17 +6,45 @@
 var express = require('express');
 var path = require('path');
 var crypto = require('crypto');
-var google = require('googleapis');
 var request = require('request');
+var multer = require('multer');
 
 var api = express();
 
 api.use(express.static(path.resolve(__dirname, 'client')));
 
+//why...
+api.set('views', path.join(__dirname, 'client'));
+api.engine('html', require('ejs').renderFile);
+api.set('view engine', 'html');
+
 //Home page listing features of the API with examples
 api.get("/", function(req, res) {
     res.setHeader('content-type', 'text/html');
     res.render('index');
+});
+
+//Load get-file-size
+//On button click, go to result page and send data
+var storage = multer.memoryStorage();
+var upload = multer({storage:storage, limits:{files:1}}).single('file');
+
+api.get("/get-file-size", function(req, res) {
+  res.setHeader('content-type', 'text/html');
+  res.render('get-file-size');
+});
+
+api.post("/api/file-size", function(req, res) {
+  upload(req, res, function(err) {
+    if (err) throw err;
+    
+    if(req.file != undefined) {
+      res.send({"size": req.file.size});
+    }
+    else {
+      res.send('No file selected');
+    }
+  });
 });
 
 //Take a timestamp or natural date and return object with both versions.
@@ -117,7 +145,6 @@ api.get("/api/imagesearch/:str", function(req, res) {
     url += '&start=' + req.query.offset;
   }
   
-  
   request.get(url, function(err, data) {
     if (err) throw err;
     
@@ -143,7 +170,6 @@ api.get("/api/imagesearch/:str", function(req, res) {
     else {
       res.send(data);
     }
-    
     //data.body contains additional information, including options for the api call
   });
   

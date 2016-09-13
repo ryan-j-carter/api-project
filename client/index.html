@@ -17,6 +17,7 @@
         <li><a href="#whoami">Who Am I?</a></li>
         <li><a href="#urlshortener">URL Shortener</a></li>
         <li><a href="#imagesearch">Image Search</a></li>
+        <li><a href="#filesize">File Size</a></li>
       </ul>
     </div>
     
@@ -54,13 +55,13 @@
           Takes a URL as a parameter and hashes it to get a unique code. Use this code to redirect to the given URL.
         </blockquote>
         
-        <h3 class="example-type">Example creation:</h3>
+        <h3 class="example-type">Creation example:</h3>
         <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/shorten/https://google.com</code>
         
-        <h3 class="example-type">Example creation output:</h3>
+        <h3 class="example-type">Creation output:</h3>
         <code class="example-code">{"original_url":"https://google.com","short_url":"http://ryanjc-api-project.herokuapp.com/9999"}</code>
 
-        <h3 class="example-type">Example usage:</h3>
+        <h3 class="example-type">Shortened usage:</h3>
         <code class="example-code">http://ryanjc-api-project.herokuapp.com/9999</code>
         
         <h3 class="example-type">Redirects to:</h3>
@@ -73,17 +74,33 @@
           Takes a search string and returns image results from Google. Add ?offset=_ to paginate through results. Alternatively use the api with "recent" to see recent searches.
         </blockquote>
         
-        <h3 class="example-type">Example search:</h3>
+        <h3 class="example-type">Search example:</h3>
         <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/imagesearch/ktm 525?offset=10</code>
         
-        <h3 class="example-type">Example output:</h3>
+        <h3 class="example-type">Search output:</h3>
         <code class="example-code">[{"url":"...","snippet":"...","thumbnail":"...","context":"...","alt":"..."}, ...]</code>
         
-        <h3 class="example-type">Example recent:</h3>
-        <code class="example-code">https://api-project-ryanjc.c9users.io/api/imagesearch/recent</code>
+        <h3 class="example-type">Recent url:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/imagesearch/recent</code>
         
-        <h3 class="example-type">Example output:</h3>
+        <h3 class="example-type">Recent output:</h3>
         <code class="example-code">[{"term":"ktm 525","when":"2016-09-13T18:37:10.102Z"}, ...]</code>
+      </section>
+      
+      <section id="filesize">
+        <h2 class="api-name">File Size</h2>
+        <blockquote class="api-desc">
+          Load a file and press the Get Size button. Server will redirect to new page and give you the file size
+        </blockquote>
+        
+        <h3 class="example-type">Choose file url:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/get-file-size</code>
+        
+        <h3 class="example-type">Resulting url:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/file-size</code>
+        
+        <h3 class="example-type">Output:</h3>
+        <code class="example-code">{"size": 48761}</code>
       </section>
   </body>
 </html>
