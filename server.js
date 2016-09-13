@@ -6,6 +6,8 @@
 var express = require('express');
 var path = require('path');
 var crypto = require('crypto');
+var google = require('googleapis');
+var request = require('request');
 
 var api = express();
 
@@ -60,7 +62,6 @@ api.get("/api/whoami", function(req, res) {
 
 //Take a URL as a parameter and give it a 'shortened' redirect code
 //Return an object with the shortened url and where it will redirect
-
 var redirects = {};
 api.get("/api/shorten/*", function(req, res) {
   res.setHeader('content-type', 'text/plaintext');
@@ -86,6 +87,66 @@ api.get("/:id", function(req, res) {
   else {
     res.redirect(redirects[req.params.id]);
   }
+});
+
+//Take an image search query and return the list of results
+//Also keep track of recent queries that can be retrieved at any time
+var apikey = 'AIzaSyAJXV1T4DRFu-lrM0IByU8-U8RHBVLZ3bg';
+var cxkey = '010794592543521060790%3Apcpguu-4xne';
+
+var recentSearches = [];
+
+function addSearch(search) {
+  recentSearches.unshift(search);
+  if (recentSearches.length > 10) {
+    recentSearches.pop();
+  }
+}
+
+api.get("/api/imagesearch/recent", function(req, res) {
+  res.send(JSON.stringify(recentSearches));
+});
+
+api.get("/api/imagesearch/:str", function(req, res) {
+  res.setHeader('content-type', 'text/plaintext');
+  
+  var url = 'https://www.googleapis.com/customsearch/v1?q=' + req.params.str + '&cx=' + cxkey + '&searchType=image&key=' + apikey;
+  
+  //If user gives an offset index, add &start=offset to the url
+  if (req.query.offset != undefined) {
+    url += '&start=' + req.query.offset;
+  }
+  
+  
+  request.get(url, function(err, data) {
+    if (err) throw err;
+    
+    data = JSON.parse(data.body);
+    
+    if (data.items != undefined) {
+      var images = [];
+      
+      data.items.forEach(function(item) {
+        images.push({
+          url: item.link,
+          snippet: item.snippet,
+          thumbnail: item.image.thumbnailLink,
+          context: item.image.contextLink,
+          alt: item.title
+        });
+      });
+    
+      addSearch({term: req.params.str, when: (new Date()).toISOString()});
+      
+      res.send(JSON.stringify(images));
+    }
+    else {
+      res.send(data);
+    }
+    
+    //data.body contains additional information, including options for the api call
+  });
+  
 });
 
 //Listen on the provided IP:port or the default 0.0.0.0:8080

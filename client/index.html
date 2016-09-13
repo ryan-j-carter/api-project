@@ -16,6 +16,7 @@
         <li><a href="#timestamp">Timestamp</a></li>
         <li><a href="#whoami">Who Am I?</a></li>
         <li><a href="#urlshortener">URL Shortener</a></li>
+        <li><a href="#imagesearch">Image Search</a></li>
       </ul>
     </div>
     
@@ -64,6 +65,25 @@
         
         <h3 class="example-type">Redirects to:</h3>
         <code class="example-code">https://google.com</code>
+      </section>
+      
+      <section id="imagesearch">
+        <h2 class="api-name">Image Search</h2>
+        <blockquote class="api-desc">
+          Takes a search string and returns image results from Google. Add ?offset=_ to paginate through results. Alternatively use the api with "recent" to see recent searches.
+        </blockquote>
+        
+        <h3 class="example-type">Example search:</h3>
+        <code class="example-code">http://ryanjc-api-project.herokuapp.com/api/imagesearch/ktm 525?offset=10</code>
+        
+        <h3 class="example-type">Example output:</h3>
+        <code class="example-code">[{"url":"...","snippet":"...","thumbnail":"...","context":"...","alt":"..."}, ...]</code>
+        
+        <h3 class="example-type">Example recent:</h3>
+        <code class="example-code">https://api-project-ryanjc.c9users.io/api/imagesearch/recent</code>
+        
+        <h3 class="example-type">Example output:</h3>
+        <code class="example-code">[{"term":"ktm 525","when":"2016-09-13T18:37:10.102Z"}, ...]</code>
       </section>
   </body>
 </html>

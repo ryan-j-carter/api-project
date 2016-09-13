@@ -7,6 +7,8 @@
   "author": "ryanjc",
   "dependencies": {
     "crypto": "0.0.3",
-    "express": "~3.2.4"
+    "express": "~3.2.4",
+    "googleapis": "^12.4.0",
+    "request": "^2.74.0"
   }
 }
